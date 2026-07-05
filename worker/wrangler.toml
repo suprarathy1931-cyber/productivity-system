@@ -1,0 +1,26 @@
+name = "productivity-system-api"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+
+# =====================================================================
+# D1 DATABASE BINDING
+# =====================================================================
+# After creating the D1 database with:
+#   wrangler d1 create productivity-db
+# copy the `database_id` it prints into the line below.
+# The binding name "DB" is what src/index.ts references as env.DB —
+# don't rename one without renaming the other.
+
+[[d1_databases]]
+binding = "DB"
+database_name = "productivity-db"
+database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+
+# =====================================================================
+# SECRETS (do NOT put actual secret values in this file — this file
+# is committed to git). Set the real value with:
+#   wrangler secret put API_KEY
+# It will prompt you to paste the value, and it's stored encrypted
+# in Cloudflare, never in this repo.
+# =====================================================================
+# Expected secret: API_KEY  (the shared header key the frontend sends)
