@@ -14,7 +14,7 @@ compatibility_date = "2025-01-01"
 [[d1_databases]]
 binding = "DB"
 database_name = "productivity-db"
-database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+database_id = "34779cf2-3f6f-4122-a381-6d8029946462"
 
 # =====================================================================
 # SECRETS (do NOT put actual secret values in this file — this file
