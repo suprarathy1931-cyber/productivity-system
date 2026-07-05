@@ -1,0 +1,377 @@
+/* =====================================================================
+   APP SHELL — layout, navigation, design tokens
+   =====================================================================
+   Aesthetic direction: quiet, editorial, breath-paced. This is a
+   tracker for a slow physiological practice — the UI should feel calm
+   rather than urgent. Warm neutrals instead of clinical blue/white
+   health-app default. A serif display face for numbers/headers so the
+   breath-hold count (the one metric that matters most) reads as
+   significant rather than squeezed into a generic stat card.
+
+   Other modules built later are free to have a completely different
+   feel (Workout can be louder/more kinetic, Meal Tracker warmer/more
+   textural) — this palette is Breath Log's specifically, not a
+   system-wide default forced onto every module.
+   ===================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  /* Warm neutral palette — parchment / ink, not white / black */
+  --color-bg: #f7f3ec;
+  --color-surface: #fffdf9;
+  --color-ink: #2b2620;
+  --color-ink-soft: #6b6255;
+  --color-border: #e4dbc9;
+  --color-accent: #8a6d4f;
+  --color-accent-soft: #d9c9ae;
+  --color-pending: #b8860b;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+
+  --radius: 14px;
+  --shadow-soft: 0 2px 12px rgba(43, 38, 32, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* -------------------------------------------------------------------
+   Shell layout: sidebar (desktop) + bottom tabs (mobile), never both
+   visible at once — controlled by a single breakpoint.
+   ------------------------------------------------------------------- */
+
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  padding: 32px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sidebar-brand {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--color-accent);
+  padding: 0 12px 24px;
+  letter-spacing: 0.01em;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: var(--color-ink-soft);
+  text-decoration: none;
+  font-size: 0.92rem;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.nav-item:hover {
+  background: var(--color-bg);
+  color: var(--color-ink);
+}
+
+.nav-item-active {
+  background: var(--color-accent-soft);
+  color: var(--color-ink);
+  font-weight: 500;
+}
+
+.nav-icon {
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.main-content {
+  flex: 1;
+  min-width: 0;
+  padding: 48px 56px 96px;
+}
+
+.bottom-tabs {
+  display: none;
+}
+
+@media (max-width: 860px) {
+  .sidebar {
+    display: none;
+  }
+
+  .main-content {
+    padding: 24px 20px 88px;
+  }
+
+  .bottom-tabs {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    overflow-x: auto;
+    z-index: 10;
+  }
+
+  .tab-item {
+    flex: 1;
+    min-width: 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 8px 4px 10px;
+    text-decoration: none;
+    color: var(--color-ink-soft);
+    font-size: 0.62rem;
+  }
+
+  .tab-item-active {
+    color: var(--color-accent);
+  }
+
+  .tab-icon {
+    font-size: 1.15rem;
+  }
+}
+
+/* -------------------------------------------------------------------
+   Module page — shared shell for every module's content area.
+   ------------------------------------------------------------------- */
+
+.module-page {
+  max-width: 640px;
+}
+
+.module-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.module-header h1 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 400;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.module-subtitle {
+  margin: 6px 0 0;
+  color: var(--color-ink-soft);
+  font-size: 0.95rem;
+}
+
+.module-subtitle strong {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--color-accent);
+  /* A very slow, subtle pulse on the primary breath-hold number —
+     the one on-theme micro-interaction in this module, echoing the
+     slow inhale/exhale rhythm rather than a generic loading pulse. */
+  animation: breathe 6s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.72; }
+}
+
+.empty-state {
+  color: var(--color-ink-soft);
+  font-style: italic;
+  padding: 24px 0;
+}
+
+/* -------------------------------------------------------------------
+   Buttons
+   ------------------------------------------------------------------- */
+
+.btn-primary {
+  background: var(--color-ink);
+  color: var(--color-surface);
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.btn-primary:hover {
+  opacity: 0.85;
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* -------------------------------------------------------------------
+   Log form
+   ------------------------------------------------------------------- */
+
+.log-form {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.form-row-highlight {
+  background: var(--color-bg);
+  margin: 0 -24px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.log-form label {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: var(--color-ink-soft);
+}
+
+.log-form input,
+.log-form textarea {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  padding: 8px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  color: var(--color-ink);
+}
+
+.form-row-highlight input {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 500;
+  padding: 10px 12px;
+}
+
+.log-form input:focus,
+.log-form textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.form-details {
+  font-size: 0.85rem;
+}
+
+.form-details summary {
+  cursor: pointer;
+  color: var(--color-accent);
+  font-weight: 500;
+  padding: 4px 0;
+}
+
+.form-details > div {
+  margin-top: 12px;
+}
+
+.checkbox-row {
+  flex-direction: row !important;
+  align-items: center;
+  gap: 8px !important;
+}
+
+.checkbox-row input {
+  width: auto;
+}
+
+/* -------------------------------------------------------------------
+   Session history table
+   ------------------------------------------------------------------- */
+
+.session-history h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+}
+
+.session-history table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.session-history th {
+  text-align: left;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-ink-soft);
+  font-weight: 500;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.session-history td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.9rem;
+}
+
+.session-history tr:last-child td {
+  border-bottom: none;
+}
+
+.notes-cell {
+  color: var(--color-ink-soft);
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sync-badge {
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
