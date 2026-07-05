@@ -1,4 +1,4 @@
-name = "productivity-system-api"
+name = "productivity-system"
 main = "src/index.ts"
 compatibility_date = "2025-01-01"
 
