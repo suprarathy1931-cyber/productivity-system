@@ -23,4 +23,4 @@ database_id = "34779cf2-3f6f-4122-a381-6d8029946462"
 # It will prompt you to paste the value, and it's stored encrypted
 # in Cloudflare, never in this repo.
 # =====================================================================
-# Expected secret: API_KEY  (the shared header key the frontend sends)
+# Expected secret: b58b3eb411816c582a3be693b988463075e8d8363872f843adc572eb990d9f3f  (the shared header key the frontend sends)
